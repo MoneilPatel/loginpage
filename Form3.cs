@@ -49,15 +49,20 @@ namespace loginpage
                 txtPassword.Clear();
                 txtUserName.Focus();
             }
+            else if (txtUserName.Text.Length==0)
+            {
+                MessageBox.Show("Please enter a username!");
+            }
             
-            if(!keyExists)
+            if(!keyExists && txtUserName.Text.Length !=0)
             {
                 Form1.users.Add(temp,pass);
                 Form1.button1WasClicked = false;
                 txtUserName.Clear();
+                this.Close();
             }
         
-            this.Close();
+            
         }
 
         private void Form3_Load(object sender, EventArgs e)
