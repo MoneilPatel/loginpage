@@ -13,8 +13,8 @@ namespace loginpage
     public partial class Form1 : Form
     {
         
-        Dictionary<String, String> users = new Dictionary<string, string>();
-
+        public static Dictionary<String, String> users = new Dictionary<String, String>();
+        public static bool button1WasClicked = false;
         public Form1()
         {
             InitializeComponent();
@@ -27,14 +27,31 @@ namespace loginpage
 
         private void button1_Click(object sender, EventArgs e)
         {
-            String temp = Convert.ToString(txtUserName.Text);
-            bool keyExists = users.ContainsKey(temp);
-            //Console.WriteLine(users);
-            String value = users[temp]; 
+            String UserEnteredUser = Convert.ToString(txtUserName.Text);
+            String UserEnteredPass = Convert.ToString(txtPassword.Text);
+            bool keyExists = users.ContainsKey(UserEnteredUser);
+            /*if (button1WasClicked)
+            {
+                users.Add(Form3.User, Form3.Pass);
+                button1WasClicked = false;
+            }
+            */
+            
             if (keyExists)
             {
-                new Form2().Show();
-                this.Hide();
+                String rightPass = users[UserEnteredUser];
+                if (rightPass == UserEnteredPass)
+                {
+                    new Form2().Show();
+                    this.Hide();
+                }
+                else
+                {
+                    MessageBox.Show("The Username or Password you enter is incorrect");
+                    txtPassword.Clear();
+                    txtUserName.Clear();
+                    txtUserName.Focus();
+                }
 
             }
             else
@@ -80,14 +97,16 @@ namespace loginpage
 
         private void label6_Click(object sender, EventArgs e)
         {
+            button1WasClicked = true;
             Form3 frm3 = new Form3();
             frm3.Show();
-            //String username = Convert.ToString(Form3.SetValueForText1);
-            //String password = Convert.ToString(Form3.SetValueForText2);
-            users.Add(Form3.SetValueForText1, Form3.SetValueForText2);
-            //users.Add("moneil", "patel");
+            
 
         }
-        
+
+        private void txtUserName_TextChanged(object sender, EventArgs e)
+        {
+            
+        }
     }
 }
